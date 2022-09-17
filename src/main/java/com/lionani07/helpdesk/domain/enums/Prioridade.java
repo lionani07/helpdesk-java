@@ -8,12 +8,12 @@ import java.util.Arrays;
 @Getter
 @AllArgsConstructor
 public enum Prioridade {
-    BAIXA(0, "ABERTO"),
+    BAIXA(0, "BAIXA"),
     MEDIA(1, "MEDIA"),
     ALTA(2, "ALTA");
 
-    private Integer codigo;
-    private String descricao;
+    private final Integer codigo;
+    private final String descricao;
 
     public static Prioridade toEnum(final Integer codigo) {
         return Arrays.stream(Prioridade.values())

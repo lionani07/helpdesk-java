@@ -12,8 +12,8 @@ public enum Status {
     ANDAMENTO(1, "ANDAMENTO"),
     ENCERRADO(2, "ENCERRADO");
 
-    private Integer codigo;
-    private String descricao;
+    private final Integer codigo;
+    private final String descricao;
 
     public static Status toEnum(final Integer codigo) {
         return Arrays.stream(Status.values())
