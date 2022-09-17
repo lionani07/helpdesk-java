@@ -12,8 +12,8 @@ public enum Perfil {
     CLIENTE(1, "ROLE_CLIENTE"),
     TECNICO(2, "ROLE_TECNICO");
 
-    private Integer codigo;
-    private String descricao;
+    private final Integer codigo;
+    private final String descricao;
 
     public static Perfil toEnum(final Integer codigo) {
         return Arrays.stream(Perfil.values())
