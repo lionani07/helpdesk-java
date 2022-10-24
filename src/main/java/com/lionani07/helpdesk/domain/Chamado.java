@@ -1,6 +1,7 @@
 package com.lionani07.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lionani07.helpdesk.domain.enums.Prioridade;
 import com.lionani07.helpdesk.domain.enums.Status;
 import lombok.EqualsAndHashCode;
@@ -33,9 +34,11 @@ public class Chamado {
     private String observacoes;
 
     @ManyToOne
+    @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
 
     @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {

@@ -1,5 +1,6 @@
 package com.lionani07.helpdesk.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lionani07.helpdesk.domain.enums.Perfil;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 public class Tecnico extends Pessoa {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tecnico")
     private List<Chamado> chamados = new ArrayList<>();
 
