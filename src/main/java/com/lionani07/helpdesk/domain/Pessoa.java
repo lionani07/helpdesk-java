@@ -15,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "pessoa")
 public abstract class Pessoa {
 
     @Id
@@ -31,6 +32,7 @@ public abstract class Pessoa {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PERFIS")
+    @Enumerated(EnumType.STRING)
     protected Set<Perfil> perfis = new HashSet<>();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
