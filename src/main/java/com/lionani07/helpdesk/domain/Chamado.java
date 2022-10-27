@@ -1,7 +1,6 @@
 package com.lionani07.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lionani07.helpdesk.domain.enums.Prioridade;
 import com.lionani07.helpdesk.domain.enums.Status;
 import lombok.EqualsAndHashCode;
@@ -28,7 +27,11 @@ public class Chamado {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
+
+    @Enumerated(EnumType.STRING)
     private Prioridade prioridade;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
     private String titulo;
     private String observacoes;

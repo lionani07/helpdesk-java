@@ -3,6 +3,7 @@ package com.lionani07.helpdesk.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lionani07.helpdesk.domain.dto.TecnicoDto;
 import com.lionani07.helpdesk.domain.enums.Perfil;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class Tecnico extends Pessoa {
         addPerfil(Perfil.TECNICO);
     }
 
+    @Builder
     public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
         addPerfil(Perfil.TECNICO);
