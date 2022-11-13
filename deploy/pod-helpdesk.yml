@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-helpdesk
+  labels:
+    app: pod-helpdesk
+spec:
+  containers:
+    - name: pod-helpdesk
+      image: lionani07/lio:helpdesk.1.0
+      ports:
+        - containerPort: 9090
