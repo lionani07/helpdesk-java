@@ -1,5 +1,6 @@
 package com.lionani07.helpdesk.handler;
 
+import com.lionani07.helpdesk.exceptions.ResourceAlreadyExistException;
 import com.lionani07.helpdesk.exceptions.ResourceNotFoundException;
 import lombok.val;
 import org.springframework.http.HttpStatus;
@@ -48,5 +49,19 @@ public class HelpDeskExceptionHandler {
         badRequestError.setFieldErrors(fieldMessageErrors);
 
         return ResponseEntity.badRequest().body(badRequestError);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistException.class)
+    public ResponseEntity<StandardError> handler(ResourceAlreadyExistException e, HttpServletRequest request) {
+
+        final StandardError standardError = StandardError.builder()
+                .path(request.getRequestURI())
+                .error(MSG_BAD_REQUEST)
+                .message(e.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(System.currentTimeMillis())
+                .build();
+
+        return ResponseEntity.badRequest().body(standardError);
     }
 }
