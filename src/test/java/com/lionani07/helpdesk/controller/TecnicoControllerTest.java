@@ -1,20 +1,24 @@
 package com.lionani07.helpdesk.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lionani07.helpdesk.domain.Tecnico;
 import com.lionani07.helpdesk.exceptions.ResourceNotFoundException;
 import com.lionani07.helpdesk.service.TecnicoService;
+import com.lionani07.helpdesk.templates.TecnicoCreateRequestTemplates;
 import com.lionani07.helpdesk.templates.TecnicoTemplates;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,7 +31,7 @@ class TecnicoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @SpyBean
     private TecnicoService  tecnicoService;
 
     @Test
@@ -57,6 +61,19 @@ class TecnicoControllerTest {
                 .andExpect(jsonPath("error", Matchers.is("Resource not found")))
                 .andExpect(jsonPath("message", Matchers.is("Tecnico not found for id=1")));
 
+    }
+
+    @Test
+    void shouldCreateTecnico() throws Exception {
+        final var tecnicoRequest = TecnicoCreateRequestTemplates.builderDefault().build();
+
+        this.mockMvc.perform(
+                    post(URL_TECNICOS)
+                    .content(new ObjectMapper().writeValueAsString(tecnicoRequest))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isCreated());
     }
 
 }
