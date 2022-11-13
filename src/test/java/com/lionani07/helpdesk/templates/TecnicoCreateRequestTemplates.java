@@ -1,14 +1,13 @@
 package com.lionani07.helpdesk.templates;
 
-import com.lionani07.helpdesk.domain.Tecnico;
+import com.lionani07.helpdesk.domain.request.TecnicoCreateRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class TecnicoTemplates {
+public class TecnicoCreateRequestTemplates {
 
-    public Tecnico.TecnicoBuilder builderDefault() {
-        return Tecnico.builder()
-                .id(1)
+    public TecnicoCreateRequest.TecnicoCreateRequestBuilder builderDefault() {
+        return TecnicoCreateRequest.builder()
                 .cpf("50613433017")
                 .email("tecnico@gmail.com")
                 .nome("tecnico")
