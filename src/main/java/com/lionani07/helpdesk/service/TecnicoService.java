@@ -3,7 +3,7 @@ package com.lionani07.helpdesk.service;
 import com.lionani07.helpdesk.domain.Tecnico;
 import com.lionani07.helpdesk.domain.dto.TecnicoDto;
 import com.lionani07.helpdesk.domain.request.TecnicoCreateRequest;
-import com.lionani07.helpdesk.exceptions.ResourceAlreadyExistException;
+import com.lionani07.helpdesk.exceptions.ResourceAlreadyExistsException;
 import com.lionani07.helpdesk.exceptions.ResourceNotFoundException;
 import com.lionani07.helpdesk.repository.TecnicoRepository;
 import lombok.val;
@@ -44,7 +44,7 @@ public class TecnicoService {
 
             val fieldViolationValue = cpfField.equals(fieldViolation) ? request.getCpf() : request.getEmail();
 
-            throw new ResourceAlreadyExistException(Tecnico.class, fieldViolation, fieldViolationValue);
+            throw new ResourceAlreadyExistsException(Tecnico.class, fieldViolation, fieldViolationValue);
         }
 
     }
