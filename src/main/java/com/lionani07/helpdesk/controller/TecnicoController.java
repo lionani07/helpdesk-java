@@ -3,7 +3,9 @@ package com.lionani07.helpdesk.controller;
 import com.lionani07.helpdesk.domain.Tecnico;
 import com.lionani07.helpdesk.domain.dto.TecnicoDto;
 import com.lionani07.helpdesk.domain.request.TecnicoCreateRequest;
+import com.lionani07.helpdesk.domain.request.TecnicoUpdateRequest;
 import com.lionani07.helpdesk.service.TecnicoService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,5 +45,11 @@ public class TecnicoController {
                 .path("/{id}").buildAndExpand(tecnicoSaved.getId()).toUri();
 
         return ResponseEntity.created(location).body(tecnicoSaved);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TecnicoDto> update(@PathVariable("id") Integer id, @Valid @RequestBody TecnicoUpdateRequest request) {
+        val tecnicoUpdated = this.tecnicoService.update(id, request);
+        return ResponseEntity.ok(tecnicoUpdated);
     }
 }

@@ -3,11 +3,13 @@ package com.lionani07.helpdesk.service;
 import com.lionani07.helpdesk.domain.Tecnico;
 import com.lionani07.helpdesk.domain.dto.TecnicoDto;
 import com.lionani07.helpdesk.domain.request.TecnicoCreateRequest;
+import com.lionani07.helpdesk.domain.request.TecnicoUpdateRequest;
 import com.lionani07.helpdesk.exceptions.ResourceAlreadyExistsException;
 import com.lionani07.helpdesk.exceptions.ResourceNotFoundException;
 import com.lionani07.helpdesk.repository.TecnicoRepository;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,25 @@ public class TecnicoService {
     public TecnicoDto save(final @Valid TecnicoCreateRequest request) {
         try {
             return this.tecnicoRepository.save(Tecnico.of(request)).toDto();
+        } catch (DataIntegrityViolationException e) {
+            val cpfField = "cpf";
+            val emailField = "email";
+            val fieldViolation = StringUtils
+                    .containsAnyIgnoreCase(e.getCause().getCause().toString(), cpfField)
+                    ? cpfField : emailField;
+
+            val fieldViolationValue = cpfField.equals(fieldViolation) ? request.getCpf() : request.getEmail();
+
+            throw new ResourceAlreadyExistsException(Tecnico.class, fieldViolation, fieldViolationValue);
+        }
+
+    }
+
+    public TecnicoDto update(final Integer id, final TecnicoUpdateRequest request) {
+        try {
+            val tecnicoToUpadted = this.findById(id);
+            BeanUtils.copyProperties(request, tecnicoToUpadted, "id");
+            return this.tecnicoRepository.save(tecnicoToUpadted).toDto();
         } catch (DataIntegrityViolationException e) {
             val cpfField = "cpf";
             val emailField = "email";
