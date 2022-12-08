@@ -69,4 +69,9 @@ public class TecnicoService {
         }
 
     }
+
+    public void delete(final Integer id) {
+        this.findById(id);
+        this.tecnicoRepository.deleteById(id);
+    }
 }
