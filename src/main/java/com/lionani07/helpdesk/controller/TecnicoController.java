@@ -52,4 +52,10 @@ public class TecnicoController {
         val tecnicoUpdated = this.tecnicoService.update(id, request);
         return ResponseEntity.ok(tecnicoUpdated);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable final Integer id) {
+        this.tecnicoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
