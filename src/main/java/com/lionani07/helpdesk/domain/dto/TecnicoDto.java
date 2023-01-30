@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lionani07.helpdesk.domain.enums.Perfil;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Builder(toBuilder = true)
 @Getter
+@Setter
 public class TecnicoDto {
 
     private Integer id;
@@ -19,4 +21,5 @@ public class TecnicoDto {
     private Set<Perfil> perfis;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCriacao;
+    private String origem;
 }

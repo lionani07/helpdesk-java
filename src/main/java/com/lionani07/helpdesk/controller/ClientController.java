@@ -2,14 +2,12 @@ package com.lionani07.helpdesk.controller;
 
 import com.lionani07.helpdesk.domain.dto.ClienteDto;
 import com.lionani07.helpdesk.domain.request.ClienteCreateRequest;
+import com.lionani07.helpdesk.domain.request.ClienteUpdateRequest;
 import com.lionani07.helpdesk.service.ClienteService;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -30,5 +28,11 @@ public class ClientController {
                 .toUri();
 
         return ResponseEntity.created(location).body(clienteCrated);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteDto> update(@PathVariable Integer id, @RequestBody ClienteUpdateRequest request) {
+        val clienteUpdated = this.clienteService.update(id, request);
+        return ResponseEntity.ok().body(clienteUpdated);
     }
 }
