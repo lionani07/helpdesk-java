@@ -6,6 +6,7 @@ import com.lionani07.helpdesk.domain.request.TecnicoCreateRequest;
 import com.lionani07.helpdesk.domain.request.TecnicoUpdateRequest;
 import com.lionani07.helpdesk.exceptions.ResourceAlreadyExistsException;
 import com.lionani07.helpdesk.exceptions.ResourceNotFoundException;
+import com.lionani07.helpdesk.repository.ChamadoRepository;
 import com.lionani07.helpdesk.repository.TecnicoRepository;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,9 @@ public class TecnicoService {
 
     @Autowired
     private TecnicoRepository tecnicoRepository;
+
+    @Autowired
+    private ChamadoRepository chamadoRepository;
 
     public Tecnico findById(final Integer id) {
         return this.tecnicoRepository.findById(id)
@@ -71,7 +75,11 @@ public class TecnicoService {
     }
 
     public void delete(final Integer id) {
-        this.findById(id);
+        val tecnicoFound = this.findById(id);
+        if (!tecnicoFound.getChamados().isEmpty()) {
+            throw new DataIntegrityViolationException("Tecnico não pode ser deletado. Existem chamados para ele.");
+        }
         this.tecnicoRepository.deleteById(id);
+
     }
 }
