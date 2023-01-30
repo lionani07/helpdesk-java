@@ -10,7 +10,6 @@ public class HomeController {
 
     @GetMapping
     public String home() {
-        String version = "2023-01-30 00:00";
-        return String.format("Help desk is up! version: %s", version);
+        return "Help desk is up!";
     }
 }

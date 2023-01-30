@@ -64,20 +64,4 @@ public class HelpDeskExceptionHandler {
 
         return ResponseEntity.badRequest().body(standardError);
     }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<StandardError> handler(Exception e, HttpServletRequest request) {
-
-        final StandardError standardError = StandardError.builder()
-                .path(request.getRequestURI())
-                .error(MSG_BAD_REQUEST)
-                .message(e.getMessage())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .timestamp(System.currentTimeMillis())
-                .build();
-
-        return ResponseEntity.badRequest().body(standardError);
-    }
-
-
 }

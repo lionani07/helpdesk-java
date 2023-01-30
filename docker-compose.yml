@@ -1,10 +1,16 @@
 version: '3.1'
 
 services:
-  help-desk:
-    image: lionani07/lio:helpdesk.3.0
+
+  postgres:
+    image: postgres
     restart: always
-    ports:
-      - "9091:9090"
-    env_file:
-      - /home/lio/env.list
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    volumes: 
+      - /home/lio/Documentos/devel/00Docker/volumen/postgresdb:/var/lib/postgresql/data
+
+    ports: 
+      - 5432:5432
